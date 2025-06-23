@@ -21,13 +21,51 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.numeric_std.all;
 
 entity Counter is
---  Port ( );
+    generic(
+        MAX_COUNT   : integer := 10
+    );
+    Port (
+        -- Inputs
+        clk     : in std_logic;
+        nRst    : in std_logic;
+        enable  : in std_logic;
+        
+        -- Outputs
+        count   : out integer range 0 to MAX_COUNT;
+        done    : out std_logic;
+    );
 end Counter;
 
 architecture Behavioral of Counter is
+    -- Signals
+    signal counter_reg  : integer range 0 to MAX_COUNT := 0;
+    signal done_int     : std_logic := '0';
 
 begin
+
+    -- Processes 
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            if nrst = '0' then
+                counter_reg     <= 0;
+                done_int        <= '0';
+            elsif enable = '1' then
+                if counter_reg < MAX_COUNT then
+                    counter_reg     <= counter_reg + 1;
+                    done_int        <= '0';
+                else 
+                    done_int        <= '1';
+                end if;
+            end if;
+        end if;
+
+    end process;
+
+    count <= count_reg;
+    done <= done_int;
 
 end Behavioral;
