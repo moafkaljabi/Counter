@@ -53,6 +53,16 @@ architecture behavior of Countet_TB is
     signal done_tb      : std_logic;
     signal count_tb     : integer range 0 to 9;
 
+    -- Clock period definition
+    constant clk_period : time : 10 ns;
+
 begin
+
+    -- Instantiate the Counter  
+    uut: Counter 
+        generic map (
+            MAX_COUNT => 9
+        )
+        
 
 end behavior;
