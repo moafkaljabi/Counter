@@ -25,7 +25,7 @@ use IEEE.numeric_std.all;
 
 entity Counter is
     generic(
-        MAX_COUNT   : integer := 10
+        MAX_COUNT   : integer := 9
     );
     Port (
         -- Inputs
@@ -34,8 +34,8 @@ entity Counter is
         enable  : in std_logic;
         
         -- Outputs
-        count   : out integer range 0 to MAX_COUNT;
         done    : out std_logic;
+        count   : out integer range 0 to MAX_COUNT
     );
 end Counter;
 
@@ -46,26 +46,40 @@ architecture Behavioral of Counter is
 
 begin
 
-    -- Processes 
+    -- Process
     process(clk)
     begin
         if rising_edge(clk) then
-            if nrst = '0' then
+            if nRst = '0' then
                 counter_reg     <= 0;
                 done_int        <= '0';
             elsif enable = '1' then
                 if counter_reg < MAX_COUNT then
                     counter_reg     <= counter_reg + 1;
-                    done_int        <= '0';
+                    done_int    <= '0';
                 else 
-                    done_int        <= '1';
+                    done_int    <= '1';
                 end if;
             end if;
         end if;
-
     end process;
 
-    count <= count_reg;
+    count <= counter_reg;
     done <= done_int;
 
 end Behavioral;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
